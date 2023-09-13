@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title th:text="${grupo.nome}">Grupo 1</title>
+  <link rel="stylesheet" type="text/css" href="/styles/style2.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="user-info">
+      <div class="user-name" th:text="${userLogParticipante.getParticipante.nome}">
+        <span>Pedro Wilson</span>
+      </div>
+      <div class="balance">
+        <span class="label">Saldo do Grupo:</span>
+        <span class="value" th:text="${saldo}">R$1,500.00</span>
+      </div>
+      <div class="user-icon"></div>
+    </div>
+    <h1 th:text="${grupo.nome}">Grupo 1 </h1>
+    <h2>Data de Fechamento: <span th:text="${grupo.caixinha.dataDeFechamento}">Data</span></h2>
+
+    <div class="container">
+      <div class="buttons-container">
+        <a th:href="@{/grupo/{id}/novo_lancamento(id=${grupo.id})}"><button>Novo Lançamento</button></a>
+        <span th:if="${userLogParticipante.eAdmin}">
+          <a th:href="@{/grupo/{id}/add_participante(id=${grupo.id})}"><button>Adicionar Participante</button></a>
+        </span>
+
+
+        <span th:if="${userLogParticipante.getParticipante.equals(grupo.dono)}">
+          <a th:href="@{/grupo/{id}/remover_grupo(id=${grupo.id})}"><button>Excluir grupo</button></a>
+        </span>
+
+        <a th:href="@{/grupo/{id}/sair(id=${grupo.id})}"><button>Sair do Grupo</button></a></button>
+
+        <a href="/usuario"><button>Voltar</button></a>
+      </div>
+      <div class="groups-container">
+        <h3 class="text-center">Participantes</h3>
+        <table>
+          <thead>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="participante : ${participantes}">
+              <td th:text="${participante.getParticipante.nome}">João</td>
+              <td th:text="${participante.eAdmin} ? 'admin' : '' "> </td>
+              <td th:if="${userLogParticipante.eAdmin && participante.getParticipante != grupo.dono}">
+                <a
+                  th:href="@{/grupo/{id}/remover_participante/{pId}(id=${grupo.id}, pId=${participante.id})}">Remover</a>
+
+                <span th:if="${participante.eAdmin}">
+                  <a th:href="@{/grupo/{id}/retirar_administrador/{pId}(id=${grupo.id}, pId=${participante.id})}">retirar
+                    Admin</a>
+                </span>
+                <span th:unless="${participante.eAdmin}">
+                  <a th:href="@{/grupo/{id}/tornar_administrador/{pId}(id=${grupo.id}, pId=${participante.id})}">Tornar
+                    Admin</a>
+                </span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="transaction-history">
+        <h3 class="text-center">Ultimas transações do Grupo</h2>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="lanc : ${lancamentos}">
+                <td>
+                  <span th:switch="${lanc.estado}">
+                    <span th:case="${T(com.padroes.projetos.carteira.model.entidades.lancamento.EstadoEnum).PROCESSADO}"
+                      style="color: green;"> P </span>
+                    <span th:case="${T(com.padroes.projetos.carteira.model.entidades.lancamento.EstadoEnum).CANCELADO}"
+                      style="color: red;"> C </span>
+                    <span th:case="${T(com.padroes.projetos.carteira.model.entidades.lancamento.EstadoEnum).AGUARDANDO}"
+                      style="color: yellow;"> A </span>
+                </td>
+                <td th:text="${lanc.dataHora}">05/05/2023</td>
+                <td th:text="${lanc.mensagem}">Compra de alimentos</td>
+                <td th:text="${lanc.valor}">R$50.00</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Carteira Coletiva</title>
+  <link rel="stylesheet" type="text/css" th:href="@{styles/style2.css}">
+</head>
+
+<body>
+  <div class="container">
+    <h1 th:text="${user.getNome}">Carteira Coletiva</h1>
+    <div class="wallet-info">
+      <div class="balance">
+        <span class="label">Saldo Total:</span>
+        <span class="value" th:text="${valorTotal}">$1,500.00</span>
+      </div>
+      <div class="members">
+        <span class="label">Membros:</span>
+        <ul class="member-list" th:each="participante : ${participantes}">
+          <a th:href="@{grupo/{id}(id=${participante.getParticipante.getId})}">
+            <li th:text="${participante.getParticipante.getNome}">Usuário 1
+            </li>
+          </a>
+        </ul>
+      </div>
+    </div>
+    <div class="transaction-history">
+      <h2>Histórico de Transações</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Data</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody th:each="lancamento : ${lancamentos}">
+          <tr>
+            <td th:text="${lancamento.estado}">PROCESSADO</td>
+            <td th:text="${lancamento.dataHora}">10/05/2023</td>
+            <td th:text="${lancamento.mensagem}">Compra de alimentos</td>
+            <td th:text="${lancamento.valor}">$50.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>

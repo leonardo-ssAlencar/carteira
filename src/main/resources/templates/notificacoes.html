@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Notificações</title>
+  <link rel="stylesheet" type="text/css" th:href="@{styles/style4.css}">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Notificações</h1>
+    <div th:each="notificacao : ${notificacoes}">
+
+      <div class="notification">
+        <p th:text="${notificacao.mensagem}">Conteúdo da primeira notificação.</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

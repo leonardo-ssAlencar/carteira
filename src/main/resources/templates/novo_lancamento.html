@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Novo Lançamento</title>
+  <link rel="stylesheet" type="text/css" href="/styles/sytle3.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>Novo Lançamento</h2>
+    <form class="transaction-form" action="#" th:action="@{/grupo/{id}/realizarLancamento(id=${grupo.id})}"
+      method="post">
+      <div class="form-group">
+        <label for="description">Descrição:</label>
+        <input type="text" id="description" name="mensagem" placeholder="Descrição do lançamento" required>
+      </div>
+      <div class="form-group">
+        
+        <label for="amount">Valor:</label>
+        <input type="text" id="amount" name="valor"  pattern="^\d+(\.\d{1,2})?$" placeholder="R$100.00" required>
+      </div>
+      <div class="form-group">
+        <label for="grupo">Grupo:</label>
+        <select id="grupo" name="grupo" disabled>
+          <option th:text="${grupo.nome}" th:value="${grupo.id}">Grupo1</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="operacao">Operação:</label>
+        <select id="operacao" name="operacao">
+          <option th:each="op : ${operacoes}" th:value="${op}" th:text="${op}"></option>
+        </select>
+      </div>
+      <button type="submit">Adicionar Lançamento</button>
+    </form>
+  </div>
+</body>
+
+</html>

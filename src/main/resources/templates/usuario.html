@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Meus Lançamentos</title>
+  <link rel="stylesheet" type="text/css" th:href="@{styles/style2.css}">
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="user-info">
+      <div class="user-name">
+        <span th:text="${nome}">Nome User</span>
+      </div>
+      <div class="balance">
+        <span class="label">Nome: </label></span>
+        <span class="value" th:text="${user.nome}"></span>
+        <span class="label">Saldo: </span>
+        <span class="value" th:text="${valorTotal}">R$ 1,500.00</span>
+      </div>
+      <a href="/encerrarlogin" class="buttons-container">Sair</a>
+      <a href="/notificacao" class="buttons-container">Notificação</a>
+      <div class="user-icon"></div>
+    </div>
+    <h1>Meus Lançamentos</h1>
+    <div class="container">
+      <div class="buttons-container">
+        <a href="/novo_grupo"><button>Criar Grupo</button></a>
+
+
+      </div>
+      <div class="groups-container">
+        <h3 class="text-center">Meus Grupos</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Nome do Grupo</th>
+              <th>Saldo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="grupo" th:each="participante : ${participantes}">
+              <td th:href="@{grupo/{id}(id=${participante.getId})}">
+                <a th:text="${participante.getNome}" th:href="@{grupo/{id}(id=${participante.getId})}">Usuário 1
+                </a>
+              </td>
+              <th th:text="${participante.caixinha.valorTotal}">
+                R$500.00</th>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="transaction-history">
+        <h3 class="text-center">Meus Lançamentos</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Grupo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="lancamento : ${lancamentos}">
+                <td data-color="red" th:text="${lancamento.dataHora}">17/05/2023</td>
+                <td th:text="${lancamento.mensagem}">Compra de alimentos</td>
+                <td th:text="${lancamento.valor}">R$50.00</td>
+                <td th:text="${lancamento.caixinha.grupo.nome}">Grupo 3</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+</body>
+
+</html>

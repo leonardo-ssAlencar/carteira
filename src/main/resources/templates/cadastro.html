@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Tela de Cadastro</title>
+  <link rel="stylesheet" type="text/css" th:href="@{styles/style.css}">
+</head>
+
+<body>
+  <div class="container">
+    <h2>Cadastro</h2>
+    <form action="#" th:action="@{/realizarCadastro}" method="post" th:object="${user}">
+      <label for="username">Nome de usuário</label>
+      <input type="text" id="username" name="username" th:field="*{nome}" placeholder="Digite seu nome de usuário"
+        required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" th:field="*{email}" placeholder="Digite seu email" required>
+
+      <label for="email">Telefone</label>
+      <input type="telefone" id="telefone" name="telefone" th:field="*{telefone}" placeholder="Digite seu telefone" required>
+
+      <label for="password">Senha</label>
+      <input type="password" id="password" name="password" th:field="*{senha}" placeholder="Digite sua senha" required>
+
+      <input type="submit" value="Cadastrar">
+
+      <p class="message">Já tem uma conta? <a href="/login">Faça login</a></p>
+    </form>
+  </div>
+</body>
+
+</html>
